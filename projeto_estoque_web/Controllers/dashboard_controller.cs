@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Projeto_estoque.web.Models.ViewModels;
+using projeto_estoque_web.Models.view_models;
 
-namespace Projeto_estoque.web.Controllers
+namespace projeto_estoque_web.Controllers
 {
     public class DashboardController : Controller
     {

@@ -1,284 +1,342 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  background: #f5f6f8;
-  color: #1f2937;
+    margin: 0;
+    background: #f5f6f8;
+    color: #1f2937;
 }
 
 /* =========================
-LAYOUT
+   LAYOUT
 ========================= */
 
 .admin-layout {
-  min-height: 100vh;
-  display: flex;
+    min-height: 100vh;
 }
 
 /* =========================
-SIDEBAR
+   SIDEBAR
 ========================= */
 
 .sidebar {
-  width: 250px;
-  min-width: 250px;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1000;
-}
+    width: 220px;
+    min-width: 220px;
+    height: 100vh;
 
-/* LOGO */
+    background: #111111;
+    color: #ffffff;
 
-.sidebar-header {
-  height: 70px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #eeeeee;
-}
+    display: flex;
+    flex-direction: column;
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    position: fixed;
+    left: 0;
+    top: 0;
 
-.logo-icon {
-  font-size: 25px;
-}
-
-.logo-text {
-  font-size: 17px;
-  font-weight: 700;
-}
-
-.sidebar-close {
-  display: none;
-  border: none;
-  background: none;
-  font-size: 28px;
-}
-
-/* MENU */
-
-.sidebar-menu {
-  padding: 20px 12px;
-  flex: 1;
-}
-
-.menu-title {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 8px;
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  letter-spacing: 0.5px;
-}
-
-.menu-title-bottom {
-  margin-top: 25px;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 12px;
-  margin-bottom: 4px;
-  border-radius: 7px;
-  color: #4b5563;
-  text-decoration: none;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.menu-item:hover {
-  background: #f3f4f6;
-  color: #111827;
-}
-
-.menu-item.active {
-  background: #eef4ff;
-  color: #2563eb;
-}
-
-.menu-icon {
-  width: 22px;
-  text-align: center;
-  font-size: 17px;
+    z-index: 1000;
 }
 
 /* =========================
-SIDEBAR FOOTER
+   LOGO
+========================= */
+
+.sidebar-header {
+    height: 70px;
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #262626;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.logo-icon {
+    font-size: 23px;
+}
+
+.logo-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* =========================
+   BOTÃO FECHAR
+========================= */
+
+.sidebar-close {
+    display: none;
+
+    border: none;
+    background: transparent;
+
+    color: #ffffff;
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.sidebar-menu {
+    padding: 20px 10px;
+    flex: 1;
+}
+
+.menu-title {
+    display: block;
+
+    padding: 0 11px;
+    margin-bottom: 8px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    color: #777777;
+    letter-spacing: 1px;
+}
+
+.menu-title-bottom {
+    margin-top: 25px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 10px 11px;
+    margin-bottom: 4px;
+
+    border-radius: 7px;
+
+    color: #b8b8b8;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: background 0.2s ease,
+                color 0.2s ease;
+}
+
+.menu-item:hover {
+    background: #1f1f1f;
+    color: #ffffff;
+}
+
+.menu-item.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.menu-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* =========================
+   SIDEBAR FOOTER
 ========================= */
 
 .sidebar-footer {
-  padding: 15px;
-  border-top: 1px solid #eeeeee;
+    padding: 14px;
+
+    border-top: 1px solid #262626;
 }
 
 .admin-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
 }
 
 .admin-avatar,
 .topbar-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #2563eb;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 600;
 }
 
 .admin-info strong {
-  display: block;
-  font-size: 13px;
+    display: block;
+
+    font-size: 12px;
+    color: #ffffff;
 }
 
 .admin-info span {
-  font-size: 11px;
-  color: #888;
+    font-size: 10px;
+    color: #777777;
 }
 
 /* =========================
-ÁREA PRINCIPAL
+   ÁREA PRINCIPAL
 ========================= */
 
 .main-area {
-  margin-left: 250px;
-  width: calc(100% - 250px);
-  min-height: 100vh;
+    margin-left: 220px;
+
+    width: calc(100% - 220px);
+
+    min-height: 100vh;
 }
 
 /* =========================
-TOPBAR
+   TOPBAR
 ========================= */
 
 .topbar {
-  height: 70px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  align-items: center;
-  padding: 0 30px;
+    height: 70px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 30px;
 }
 
 .topbar-title {
-  font-size: 16px;
-  font-weight: 600;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .topbar-actions {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
 }
 
 .notification-button {
-  border: none;
-  background: transparent;
-  font-size: 18px;
+    border: none;
+    background: transparent;
+
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .menu-toggle {
-  display: none;
-  border: none;
-  background: none;
-  font-size: 22px;
-  margin-right: 15px;
+    display: none;
+
+    border: none;
+    background: transparent;
+
+    font-size: 22px;
+
+    margin-right: 15px;
+
+    cursor: pointer;
 }
 
 /* =========================
-CONTEÚDO
+   CONTEÚDO
 ========================= */
 
 .main-content {
-  min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 70px);
 }
 
 /* =========================
-OVERLAY
+   OVERLAY
 ========================= */
 
 .sidebar-overlay {
-  display: none;
+    display: none;
 }
 
 /* =========================
-TABLET
+   TABLET
 ========================= */
 
 @media (max-width: 900px) {
-  .sidebar {
-    width: 230px;
-    min-width: 230px;
-  }
 
-  .main-area {
-    margin-left: 230px;
-    width: calc(100% - 230px);
-  }
+    .sidebar {
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .main-area {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+    }
+
 }
 
 /* =========================
-CELULAR
+   CELULAR
 ========================= */
 
 @media (max-width: 700px) {
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    width: 250px;
-    min-width: 250px;
-  }
 
-  .sidebar.open {
-    transform: translateX(0);
-  }
+    .sidebar {
+        width: 250px;
+        min-width: 250px;
 
-  .sidebar-close {
-    display: block;
-  }
+        transform: translateX(-100%);
 
-  .main-area {
-    margin-left: 0;
-    width: 100%;
-  }
+        transition: transform 0.25s ease;
+    }
 
-  .topbar {
-    padding: 0 15px;
-  }
+    .sidebar.open {
+        transform: translateX(0);
+    }
 
-  .menu-toggle {
-    display: block;
-  }
+    .sidebar-close {
+        display: block;
+    }
 
-  .sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 999;
-  }
+    .main-area {
+        margin-left: 0;
+        width: 100%;
+    }
 
-  .sidebar-overlay.active {
-    display: block;
-  }
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.45);
+
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
 }

@@ -1,4 +1,4 @@
-namespace Projeto_estoque.web.Models.ViewModels
+namespace projeto_estoque_web.Models.view_models
 {
     public class DashboardViewModel
     {
