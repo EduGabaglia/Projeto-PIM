@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+```
+<title>@ViewData["Title"] - Projeto Estoque</title>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/Projeto_estoque.web.styles.css" asp-append-version="true" />
+
+@await RenderSectionAsync("Styles", required: false)
+```
+
+</head>
+
+<body>
+
+```
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">📦</span>
+                <span class="logo-text">Projeto Estoque</span>
+            </div>
+
+            <button class="sidebar-close" id="sidebarClose" type="button">
+                ×
+            </button>
+        </div>
+
+
+        <!-- MENU -->
+        <nav class="sidebar-menu">
+
+            <span class="menu-title">MENU</span>
+
+            <a asp-controller="Dashboard"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">🏠</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a asp-controller="Produtos"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">📦</span>
+                <span>Produtos</span>
+
+            </a>
+
+
+            <a asp-controller="Categorias"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">🗂️</span>
+                <span>Categorias</span>
+
+            </a>
+
+
+            <a asp-controller="Estoque"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">📊</span>
+                <span>Estoque</span>
+
+            </a>
+
+
+            <a asp-controller="Pedidos"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">🛒</span>
+                <span>Pedidos</span>
+
+            </a>
+
+
+            <a asp-controller="Promocoes"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">🏷️</span>
+                <span>Promoções</span>
+
+            </a>
+
+
+            <span class="menu-title menu-title-bottom">SISTEMA</span>
+
+
+            <a asp-controller="Configuracoes"
+               asp-action="Index"
+               class="menu-item">
+
+                <span class="menu-icon">⚙️</span>
+                <span>Configurações</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- USUÁRIO -->
+        <div class="sidebar-footer">
+
+            <div class="admin-user">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div class="admin-info">
+                    <strong>Administrador</strong>
+                    <span>Admin</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="main-area">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    type="button"
+                    aria-label="Abrir menu">
+
+                ☰
+
+            </button>
+
+
+            <div class="topbar-title">
+                @ViewData["Title"]
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button class="notification-button" type="button">
+                    🔔
+                </button>
+
+                <div class="topbar-avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTEÚDO DA PÁGINA -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- OVERLAY MOBILE -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+<script>
+
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarClose = document.getElementById("sidebarClose");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+
+    menuToggle?.addEventListener("click", function () {
+
+        sidebar.classList.add("open");
+        sidebarOverlay.classList.add("active");
+
+    });
+
+
+    sidebarClose?.addEventListener("click", function () {
+
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+
+    sidebarOverlay?.addEventListener("click", function () {
+
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+</script>
+
+@await RenderSectionAsync("Scripts", required: false)
+```
+
+</body>
+</html>

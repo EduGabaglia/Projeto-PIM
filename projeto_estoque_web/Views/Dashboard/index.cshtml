@@ -1,0 +1,202 @@
+ @model Projeto_estoque.web.Models.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Visão geral da sua loja</p>
+        </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+            <div class="card-icon">
+                📦
+            </div>
+
+            <div>
+                <span>Total de produtos</span>
+                <strong>@Model.TotalProdutos</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon alert">
+                ⚠️
+            </div>
+
+            <div>
+                <span>Estoque baixo</span>
+                <strong>@Model.EstoqueBaixo</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">
+                🛒
+            </div>
+
+            <div>
+                <span>Pedidos pendentes</span>
+                <strong>@Model.PedidosPendentes</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">
+                💰
+            </div>
+
+            <div>
+                <span>Vendas no mês</span>
+                <strong>
+                    @Model.VendasMes.ToString("C")
+                </strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Conteúdo principal -->
+    <div class="dashboard-grid">
+
+        <!-- Vendas -->
+        <div class="dashboard-panel sales-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Vendas</h2>
+                    <span>Últimos 7 dias</span>
+                </div>
+            </div>
+
+            <div class="fake-chart">
+                <div class="chart-line">
+                    <span style="height: 35%"></span>
+                    <span style="height: 55%"></span>
+                    <span style="height: 45%"></span>
+                    <span style="height: 70%"></span>
+                    <span style="height: 60%"></span>
+                    <span style="height: 85%"></span>
+                    <span style="height: 72%"></span>
+                </div>
+
+                <div class="chart-days">
+                    <span>05/09</span>
+                    <span>06/09</span>
+                    <span>07/09</span>
+                    <span>08/09</span>
+                    <span>09/09</span>
+                    <span>10/09</span>
+                    <span>11/09</span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Produtos mais vendidos -->
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Produtos mais vendidos</h2>
+                    <span>Este mês</span>
+                </div>
+            </div>
+
+            <div class="best-products">
+
+                @foreach (var produto in Model.ProdutosMaisVendidos)
+                {
+                    <div class="best-product">
+
+                        <div class="product-icon">
+                            📦
+                        </div>
+
+                        <div class="product-info">
+                            <strong>@produto.Nome</strong>
+                            <span>@produto.QuantidadeVendida unidades</span>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Últimos pedidos -->
+    <div class="dashboard-panel orders-panel">
+
+        <div class="panel-header">
+            <div>
+                <h2>Últimos pedidos</h2>
+                <span>Pedidos realizados recentemente</span>
+            </div>
+
+            <a asp-controller="Pedidos"
+               asp-action="Index"
+               class="view-all">
+                Ver todos
+            </a>
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Pedido</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var pedido in Model.UltimosPedidos)
+                    {
+                        <tr>
+                            <td>#@pedido.Id</td>
+
+                            <td>
+                                @pedido.Data.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @pedido.Valor.ToString("C")
+                            </td>
+
+                            <td>
+                                <span class="status @pedido.Status.ToLower()">
+                                    @pedido.Status
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
