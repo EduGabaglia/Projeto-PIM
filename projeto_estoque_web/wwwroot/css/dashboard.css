@@ -225,6 +225,11 @@ td {
     color: #16804b;
 }
 
+.status.cancelado {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
 
 /* RESPONSIVO */
 

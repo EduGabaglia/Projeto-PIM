@@ -14,30 +14,18 @@ namespace projeto_estoque_web.Controllers
                 PedidosPendentes = 3,
                 VendasMes = 2540.00m,
 
-                UltimosPedidos = new List<PedidoResumoViewModel>
-                {
-                    new PedidoResumoViewModel
+                UltimosPedidos = PedidosController.TodosOsPedidos
+                    .OrderByDescending(p => p.Data)
+                    .ThenByDescending(p => p.Id)
+                    .Take(3)
+                    .Select(p => new PedidoResumoViewModel
                     {
-                        Id = 1024,
-                        Data = DateTime.Now,
-                        Valor = 85.90m,
-                        Status = "Pendente"
-                    },
-                    new PedidoResumoViewModel
-                    {
-                        Id = 1023,
-                        Data = DateTime.Now.AddDays(-1),
-                        Valor = 42.50m,
-                        Status = "Preparando"
-                    },
-                    new PedidoResumoViewModel
-                    {
-                        Id = 1022,
-                        Data = DateTime.Now.AddDays(-2),
-                        Valor = 120.00m,
-                        Status = "Entregue"
-                    }
-                },
+                        Id = p.Id,
+                        Data = p.Data,
+                        Valor = p.ValorTotal,
+                        Status = p.Status
+                    })
+                    .ToList(),
 
                 ProdutosMaisVendidos = new List<ProdutoMaisVendidoViewModel>
                 {

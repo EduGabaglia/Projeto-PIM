@@ -386,9 +386,11 @@ body.dark .sidebar-footer {
 body.dark .dashboard-card,
 body.dark .produtos-card,
 body.dark .categorias-card,
+body.dark .pedidos-card,
 body.dark .dashboard-panel,
 body.dark .produtos-panel,
 body.dark .categorias-panel,
+body.dark .pedidos-panel,
 body.dark .page-btn {
     background: #1e293b;
     border-color: #334155;
@@ -396,13 +398,15 @@ body.dark .page-btn {
 
 body.dark .dashboard-card span,
 body.dark .produtos-card span,
-body.dark .categorias-card span {
+body.dark .categorias-card span,
+body.dark .pedidos-card span {
     color: #9ca3af;
 }
 
 body.dark .dashboard-card strong,
 body.dark .produtos-card strong,
-body.dark .categorias-card strong {
+body.dark .categorias-card strong,
+body.dark .pedidos-card strong {
     color: #f9fafb;
 }
 
@@ -417,6 +421,7 @@ body.dark .card-icon.alert {
 body.dark .dashboard-header p,
 body.dark .produtos-header p,
 body.dark .categorias-header p,
+body.dark .pedidos-header p,
 body.dark .panel-header span,
 body.dark .empty-state {
     color: #9ca3af;
@@ -470,7 +475,9 @@ body.dark td {
 body.dark .search-form input,
 body.dark .form-group input,
 body.dark .form-group textarea,
-body.dark .form-group select {
+body.dark .form-group select,
+body.dark .item-row select,
+body.dark .item-row input {
     background: #0f172a;
     border-color: #334155;
     color: #e5e7eb;
@@ -479,7 +486,9 @@ body.dark .form-group select {
 body.dark .search-form input:focus,
 body.dark .form-group input:focus,
 body.dark .form-group textarea:focus,
-body.dark .form-group select:focus {
+body.dark .form-group select:focus,
+body.dark .item-row select:focus,
+body.dark .item-row input:focus {
     border-color: #60a5fa;
 }
 
@@ -560,7 +569,30 @@ body.dark .status.esgotado {
     color: #f87171;
 }
 
-body.dark .status.vazia {
+body.dark .status.vazia,
+body.dark .status.cancelado {
     background: #334155;
     color: #d1d5db;
+}
+
+body.dark .item-remover {
+    background: #3b1212;
+    color: #fca5a5;
+}
+
+body.dark .item-remover:hover {
+    background: #531616;
+}
+
+body.dark .btn-adicionar {
+    border-color: #60a5fa;
+    color: #60a5fa;
+}
+
+body.dark .btn-adicionar:hover {
+    background: #172554;
+}
+
+body.dark .itens-vazio {
+    color: #9ca3af;
 }
