@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var controllerAtual = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+}
+
+<!DOCTYPE html>
 
 <html lang="pt-BR">
 <head>
@@ -16,6 +20,12 @@
 </head>
 
 <body>
+
+    <script>
+        if (localStorage.getItem("tema") === "dark") {
+            document.body.classList.add("dark");
+        }
+    </script>
 
     <div class="admin-layout">
 
@@ -46,7 +56,7 @@
 
                 <a asp-controller="Dashboard"
                    asp-action="Index"
-                   class="menu-item active">
+                   class="menu-item@(controllerAtual.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">🏠</span>
                     <span>Dashboard</span>
@@ -55,7 +65,7 @@
 
                 <a asp-controller="Produtos"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Produtos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">📦</span>
                     <span>Produtos</span>
@@ -64,7 +74,7 @@
 
                 <a asp-controller="Categorias"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Categorias", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">🗂️</span>
                     <span>Categorias</span>
@@ -73,7 +83,7 @@
 
                 <a asp-controller="Estoque"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Estoque", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">📊</span>
                     <span>Estoque</span>
@@ -82,7 +92,7 @@
 
                 <a asp-controller="Pedidos"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Pedidos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">🛒</span>
                     <span>Pedidos</span>
@@ -91,7 +101,7 @@
 
                 <a asp-controller="Promocoes"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Promocoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">🏷️</span>
                     <span>Promoções</span>
@@ -105,7 +115,7 @@
 
                 <a asp-controller="Configuracoes"
                    asp-action="Index"
-                   class="menu-item">
+                   class="menu-item@(controllerAtual.Equals("Configuracoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
 
                     <span class="menu-icon">⚙️</span>
                     <span>Configurações</span>
@@ -154,6 +164,13 @@
                 </div>
 
                 <div class="topbar-actions">
+
+                    <button class="theme-toggle"
+                            id="themeToggle"
+                            type="button"
+                            aria-label="Alternar tema">
+                        <span id="themeIcon">🌙</span>
+                    </button>
 
                     <button class="notification-button"
                             type="button"
@@ -218,6 +235,24 @@
             sidebarOverlay.classList.remove("active");
 
         });
+
+
+        const themeToggle = document.getElementById("themeToggle");
+        const themeIcon = document.getElementById("themeIcon");
+
+        themeToggle?.addEventListener("click", function () {
+
+            const dark = document.body.classList.toggle("dark");
+
+            themeIcon.textContent = dark ? "☀️" : "🌙";
+            localStorage.setItem("tema", dark ? "dark" : "light");
+
+        });
+
+
+        if (document.body.classList.contains("dark")) {
+            themeIcon.textContent = "☀️";
+        }
 
     </script>
 
