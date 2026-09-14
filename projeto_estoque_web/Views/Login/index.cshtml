@@ -1,0 +1,18 @@
+@model projeto_estoque_web.Models.view_models.LoginViewModel
+<main class = "login-container">
+    <section class= "login-card"> 
+      <h1>Login</h1>
+      <p>
+        Informe seu usuário e senha para acessar o sistema.
+      </p>
+      <form asp-controller="Login" asp-action="Index" method="post">
+        @Html.ValidationSummary()
+        <label for = "usuario">Usuário</label>
+        <input asp-for = "Usuario" required>
+        <label for = "senha">Senha</label>
+        <input asp-for = "Senha" type = "password" required>
+        <button type = "submit">Login</button> 
+
+      </form>
+    </section>    
+</main>
