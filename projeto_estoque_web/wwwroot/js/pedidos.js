@@ -56,9 +56,6 @@ function removerItem(botao) {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const form = document.querySelector("form[asp-action]");
-
-    if (form)
-        renumerarItens();
+    renumerarItens();
 
 });

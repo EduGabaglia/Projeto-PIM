@@ -1,0 +1,137 @@
+@model projeto_estoque_web.Models.view_models.EstoqueViewModel
+
+@{
+    ViewData["Title"] = "Estoque";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/estoque.css" asp-append-version="true" />
+}
+
+<div class="estoque">
+
+    <div class="estoque-header">
+        <div>
+            <h1>Estoque</h1>
+            <p>Controle de estoque da loja</p>
+        </div>
+    </div>
+
+    <partial name="_Navegacao" />
+
+    <!-- Lista de produtos -->
+    <div class="estoque-panel">
+
+        <div class="panel-header">
+            <div>
+                <h2>Lista de produtos</h2>
+                <span>@Model.TotalProdutos produto(s)</span>
+            </div>
+
+            <form method="get" asp-action="Index" class="search-form">
+                <input type="text"
+                       name="busca"
+                       value="@Model.Busca"
+                       placeholder="Buscar por nome ou categoria" />
+
+                <button type="submit" class="btn-buscar">
+                    Buscar
+                </button>
+            </form>
+        </div>
+
+        @if (Model.Produtos.Count == 0)
+        {
+            <p class="empty-state">Nenhum produto encontrado.</p>
+        }
+        else
+        {
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Estoque</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var produto in Model.Produtos)
+                        {
+                            <tr>
+                                <td class="produto-nome">
+                                    @produto.Nome
+                                </td>
+
+                                <td>
+                                    @produto.Quantidade
+                                </td>
+
+                                <td>
+                                    <span class="status @produto.StatusClasse">
+                                        @produto.Status
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="acoes">
+                                        <a asp-controller="Produtos"
+                                           asp-action="Editar"
+                                           asp-route-id="@produto.Id"
+                                           class="btn-lapis"
+                                           title="Editar produto">
+                                            ✏️
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Paginação -->
+            @if (Model.TotalPaginas > 1)
+            {
+                <div class="estoque-paginacao">
+
+                    <a asp-action="Index"
+                       asp-route-busca="@Model.Busca"
+                       asp-route-pagina="@(Model.PaginaAtual - 1)"
+                       class="page-btn @(Model.PaginaAtual == 1 ? "disabled" : "")">
+                        ‹ Anterior
+                    </a>
+
+                    @for (int i = 1; i <= Model.TotalPaginas; i++)
+                    {
+                        <a asp-action="Index"
+                           asp-route-busca="@Model.Busca"
+                           asp-route-pagina="@i"
+                           class="page-btn @(i == Model.PaginaAtual ? "active" : "")">
+                            @i
+                        </a>
+                    }
+
+                    <a asp-action="Index"
+                       asp-route-busca="@Model.Busca"
+                       asp-route-pagina="@(Model.PaginaAtual + 1)"
+                       class="page-btn @(Model.PaginaAtual == Model.TotalPaginas ? "disabled" : "")">
+                        Próxima ›
+                    </a>
+
+                </div>
+            }
+
+        }
+
+    </div>
+
+</div>

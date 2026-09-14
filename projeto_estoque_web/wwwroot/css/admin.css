@@ -391,6 +391,7 @@ body.dark .dashboard-panel,
 body.dark .produtos-panel,
 body.dark .categorias-panel,
 body.dark .pedidos-panel,
+body.dark .estoque-panel,
 body.dark .page-btn {
     background: #1e293b;
     border-color: #334155;
@@ -422,6 +423,7 @@ body.dark .dashboard-header p,
 body.dark .produtos-header p,
 body.dark .categorias-header p,
 body.dark .pedidos-header p,
+body.dark .estoque-header p,
 body.dark .panel-header span,
 body.dark .empty-state {
     color: #9ca3af;
@@ -595,4 +597,34 @@ body.dark .btn-adicionar:hover {
 
 body.dark .itens-vazio {
     color: #9ca3af;
+}
+
+body.dark .btn-tab {
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+}
+
+body.dark .btn-tab:hover {
+    border-color: #60a5fa;
+    color: #60a5fa;
+}
+
+body.dark .btn-tab.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+body.dark .btn-lapis {
+    background: #1e3a5f;
+    color: #60a5fa;
+}
+
+body.dark .btn-lapis:hover {
+    background: #172554;
+}
+
+body.dark .table-container th {
+    color: #94a3b8;
 }

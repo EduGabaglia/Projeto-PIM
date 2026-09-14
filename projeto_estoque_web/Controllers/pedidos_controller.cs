@@ -264,9 +264,18 @@ namespace projeto_estoque_web.Controllers
                         return View(pedido);
                     }
 
-                    if (par.Value > produto.Quantidade)
+                    var disponivel = produto.Quantidade;
+
+                    if (existente.Status != "Cancelado")
                     {
-                        ModelState.AddModelError(string.Empty, $"Estoque insuficiente para \"{produto.Nome}\" ({produto.Quantidade} disponíveis).");
+                        disponivel += existente.Itens
+                            .Where(i => i.ProdutoId == par.Key)
+                            .Sum(i => i.Quantidade);
+                    }
+
+                    if (par.Value > disponivel)
+                    {
+                        ModelState.AddModelError(string.Empty, $"Estoque insuficiente para \"{produto.Nome}\" ({disponivel} disponíveis).");
                         return View(pedido);
                     }
                 }
