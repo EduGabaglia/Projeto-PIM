@@ -19,6 +19,8 @@ namespace projeto_estoque_web.Controllers
 
         private static int _proximoId = _categorias.Count + 1;
 
+        internal static List<Categoria> TodasAsCategorias => _categorias;
+
         public IActionResult Index(string busca, int pagina = 1)
         {
             var lista = _categorias.AsEnumerable();
@@ -123,8 +125,16 @@ namespace projeto_estoque_web.Controllers
             if (!ModelState.IsValid)
                 return View(categoria);
 
+            var nomeAntigo = existente.Nome;
+
             existente.Nome = categoria.Nome;
             existente.Descricao = categoria.Descricao;
+
+            if (!nomeAntigo.Equals(categoria.Nome, StringComparison.OrdinalIgnoreCase))
+            {
+                foreach (var produto in ProdutosController.TodosOsProdutos.Where(p => p.Categoria == nomeAntigo))
+                    produto.Categoria = categoria.Nome;
+            }
 
             TempData["Mensagem"] = "Categoria atualizada com sucesso.";
 

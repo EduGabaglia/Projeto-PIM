@@ -286,6 +286,24 @@ td {
     color: #6b7280;
 }
 
+.status-select {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.2s ease;
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
 
 /* ESTADO VAZIO */
 

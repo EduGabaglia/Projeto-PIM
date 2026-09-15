@@ -22,8 +22,13 @@
 <body>
 
     <script>
-        if (localStorage.getItem("tema") === "dark") {
-            document.body.classList.add("dark");
+        try {
+            if (localStorage.getItem("tema") === "dark") {
+                document.body.classList.add("dark");
+            }
+        }
+        catch (e) {
+            // Armazenamento indisponível (modo privado, etc.): mantém o tema padrão (claro)
         }
     </script>
 
@@ -240,19 +245,49 @@
         const themeToggle = document.getElementById("themeToggle");
         const themeIcon = document.getElementById("themeIcon");
 
+        function lerTema() {
+
+            try {
+                return localStorage.getItem("tema");
+            }
+            catch (e) {
+                return null;
+            }
+        }
+
+        function salvarTema(valor) {
+
+            try {
+                localStorage.setItem("tema", valor);
+            }
+            catch (e) {
+                // Sem armazenamento disponível: o tema vale só para a sessão atual
+            }
+        }
+
+        function definirTema(escuro) {
+
+            document.body.classList.toggle("dark", escuro);
+
+            if (themeIcon)
+                themeIcon.textContent = escuro ? "☀️" : "🌙";
+        }
+
         themeToggle?.addEventListener("click", function () {
 
-            const dark = document.body.classList.toggle("dark");
+            const escuro = !document.body.classList.contains("dark");
 
-            themeIcon.textContent = dark ? "☀️" : "🌙";
-            localStorage.setItem("tema", dark ? "dark" : "light");
-
+            definirTema(escuro);
+            salvarTema(escuro ? "dark" : "light");
         });
 
+        window.addEventListener("storage", function (evento) {
 
-        if (document.body.classList.contains("dark")) {
-            themeIcon.textContent = "☀️";
-        }
+            if (evento.key === "tema")
+                definirTema(evento.newValue === "dark");
+        });
+
+        definirTema(lerTema() === "dark");
 
     </script>
 

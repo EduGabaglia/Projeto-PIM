@@ -96,6 +96,8 @@ namespace projeto_estoque_web.Controllers
 
         public IActionResult Index(string busca, int pagina = 1)
         {
+            ViewBag.StatusDisponiveis = StatusDisponiveis;
+
             var lista = _pedidos.AsEnumerable();
 
             if (!string.IsNullOrWhiteSpace(busca))
@@ -148,9 +150,73 @@ namespace projeto_estoque_web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AtualizarStatus(int id, string? status, string? busca, int pagina = 1)
+        {
+            if (!StatusDisponiveis.Contains(status, StringComparer.OrdinalIgnoreCase))
+            {
+                TempData["Erro"] = "Status inválido.";
+                return RedirectToAction(nameof(Index), new { busca, pagina });
+            }
+
+            var pedido = _pedidos.FirstOrDefault(p => p.Id == id);
+
+            if (pedido is null)
+            {
+                TempData["Erro"] = "Pedido não encontrado.";
+                return RedirectToAction(nameof(Index), new { busca, pagina });
+            }
+
+            var novoStatus = StatusDisponiveis.First(s => s.Equals(status, StringComparison.OrdinalIgnoreCase));
+
+            if (pedido.Status == novoStatus)
+                return RedirectToAction(nameof(Index), new { busca, pagina });
+
+            if (novoStatus == "Cancelado")
+            {
+                if (pedido.Status != "Cancelado")
+                {
+                    foreach (var item in pedido.Itens)
+                    {
+                        var produto = ProdutosController.TodosOsProdutos.FirstOrDefault(p => p.Id == item.ProdutoId);
+
+                        if (produto is not null)
+                            produto.Quantidade += item.Quantidade;
+                    }
+                }
+            }
+            else if (pedido.Status == "Cancelado")
+            {
+                foreach (var item in pedido.Itens)
+                {
+                    var produto = ProdutosController.TodosOsProdutos.FirstOrDefault(p => p.Id == item.ProdutoId);
+
+                    if (produto is not null && item.Quantidade > produto.Quantidade)
+                    {
+                        TempData["Erro"] = $"Estoque insuficiente para \"{item.NomeProduto}\" ({produto.Quantidade} disponíveis). Status não alterado.";
+                        return RedirectToAction(nameof(Index), new { busca, pagina });
+                    }
+                }
+
+                foreach (var item in pedido.Itens)
+                {
+                    var produto = ProdutosController.TodosOsProdutos.First(p => p.Id == item.ProdutoId);
+                    produto.Quantidade -= item.Quantidade;
+                }
+            }
+
+            pedido.Status = novoStatus;
+
+            TempData["Mensagem"] = $"Pedido #{pedido.Id} atualizado para \"{novoStatus}\".";
+
+            return RedirectToAction(nameof(Index), new { busca, pagina });
+        }
+
         public IActionResult Criar()
         {
             ViewBag.Produtos = ListaProdutos();
+            ViewBag.StatusList = ListaStatus("Pendente");
 
             return View(new Pedido { Data = DateTime.Now });
         }
@@ -160,7 +226,9 @@ namespace projeto_estoque_web.Controllers
         public IActionResult Criar(Pedido pedido)
         {
             ViewBag.Produtos = ListaProdutos();
+            ViewBag.StatusList = ListaStatus(pedido.Status);
 
+            NormalizarStatus(pedido);
             NormalizarItens(pedido);
             LimparErrosDeItens();
 
@@ -175,29 +243,38 @@ namespace projeto_estoque_web.Controllers
 
             var quantidadePorProduto = pedido.Itens.ToDictionary(i => i.ProdutoId, i => i.Quantidade);
 
-            foreach (var par in quantidadePorProduto)
+            if (pedido.Status != "Cancelado")
             {
-                var produto = ProdutosController.TodosOsProdutos.FirstOrDefault(p => p.Id == par.Key);
-
-                if (produto is null)
+                foreach (var par in quantidadePorProduto)
                 {
-                    ModelState.AddModelError(string.Empty, "Um dos itens refere-se a um produto inexistente.");
-                    return View(pedido);
-                }
+                    var produto = ProdutosController.TodosOsProdutos.FirstOrDefault(p => p.Id == par.Key);
 
-                if (par.Value > produto.Quantidade)
-                {
-                    ModelState.AddModelError(string.Empty, $"Estoque insuficiente para \"{produto.Nome}\" ({produto.Quantidade} disponíveis).");
-                    return View(pedido);
+                    if (produto is null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Um dos itens refere-se a um produto inexistente.");
+                        return View(pedido);
+                    }
+
+                    if (par.Value > produto.Quantidade)
+                    {
+                        ModelState.AddModelError(string.Empty, $"Estoque insuficiente para \"{produto.Nome}\" ({produto.Quantidade} disponíveis).");
+                        return View(pedido);
+                    }
                 }
             }
 
             foreach (var item in pedido.Itens)
             {
-                var produto = ProdutosController.TodosOsProdutos.First(p => p.Id == item.ProdutoId);
-                item.NomeProduto = produto.Nome;
-                item.PrecoUnitario = produto.Preco;
-                produto.Quantidade -= item.Quantidade;
+                var produto = ProdutosController.TodosOsProdutos.FirstOrDefault(p => p.Id == item.ProdutoId);
+
+                if (produto is not null)
+                {
+                    item.NomeProduto = produto.Nome;
+                    item.PrecoUnitario = produto.Preco;
+
+                    if (pedido.Status != "Cancelado")
+                        produto.Quantidade -= item.Quantidade;
+                }
             }
 
             pedido.Id = _proximoId++;
@@ -236,6 +313,7 @@ namespace projeto_estoque_web.Controllers
             ViewBag.Produtos = ListaProdutos();
             ViewBag.StatusList = ListaStatus(pedido.Status);
 
+            NormalizarStatus(pedido);
             NormalizarItens(pedido);
             LimparErrosDeItens();
 
@@ -363,6 +441,12 @@ namespace projeto_estoque_web.Controllers
                     Quantidade = g.Sum(i => i.Quantidade)
                 })
                 .ToList();
+        }
+
+        private static void NormalizarStatus(Pedido pedido)
+        {
+            pedido.Status = StatusDisponiveis.FirstOrDefault(
+                s => s.Equals(pedido.Status, StringComparison.OrdinalIgnoreCase)) ?? "Pendente";
         }
 
         private void LimparErrosDeItens()

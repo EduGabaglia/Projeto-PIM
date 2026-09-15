@@ -18,16 +18,13 @@
     </div>
 </div>
 
-@if (Model.Id > 0)
-{
-    <div class="form-group">
+<div class="form-group">
         <label asp-for="Status"></label>
         <select asp-for="Status" asp-items="@(ViewBag.StatusList as SelectList)" class="form-control"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
-}
 
-<div class="form-group">
+    <div class="form-group">
     <label>Itens do pedido</label>
 
     <div id="itensContainer">

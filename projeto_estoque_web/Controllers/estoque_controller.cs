@@ -33,7 +33,7 @@ namespace projeto_estoque_web.Controllers
 
             var model = new EstoqueViewModel
             {
-                TotalProdutos = ordenados.Count,
+                TotalProdutos = ProdutosController.TodosOsProdutos.Count,
                 Produtos = paginaItens,
                 Busca = busca ?? string.Empty,
                 PaginaAtual = pagina,

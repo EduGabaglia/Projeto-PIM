@@ -9,11 +9,6 @@ namespace projeto_estoque_web.Controllers
     {
         private const int ItensPorPagina = 8;
 
-        private static readonly string[] CategoriasDisponiveis =
-        {
-            "Alimentos", "Bebidas", "Higiene", "Limpeza", "Padaria"
-        };
-
         private static readonly List<Produto> _produtos = new()
         {
             new Produto { Id = 1, Nome = "Arroz 5kg", Categoria = "Alimentos", Preco = 24.90m, Quantidade = 42 },
@@ -151,6 +146,8 @@ namespace projeto_estoque_web.Controllers
         }
 
         private static SelectList ListaCategorias(string? selecionada = null)
-            => new SelectList(CategoriasDisponiveis, selecionada);
+            => new SelectList(
+                CategoriasController.TodasAsCategorias.Select(c => c.Nome).ToList(),
+                selecionada);
     }
 }

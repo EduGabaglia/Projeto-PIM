@@ -155,9 +155,33 @@
                                 </td>
 
                                 <td>
-                                    <span class="status @pedido.Status.ToLower()">
-                                        @pedido.Status
-                                    </span>
+                                    <form asp-action="AtualizarStatus"
+                                          asp-route-id="@pedido.Id"
+                                          asp-route-busca="@Model.Busca"
+                                          asp-route-pagina="@Model.PaginaAtual"
+                                          method="post"
+                                          class="form-status">
+
+                                        <select name="status"
+                                                class="status-select"
+                                                onchange="this.form.submit()"
+                                                aria-label="Alterar status">
+
+                                            @foreach (var s in (IEnumerable<string>)ViewBag.StatusDisponiveis)
+                                            {
+                                                if (s == pedido.Status)
+                                                {
+                                                    <option value="@s" selected="selected">@s</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@s">@s</option>
+                                                }
+                                            }
+
+                                        </select>
+
+                                    </form>
                                 </td>
 
                                 <td>

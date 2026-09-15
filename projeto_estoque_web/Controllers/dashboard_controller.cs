@@ -7,14 +7,36 @@ namespace projeto_estoque_web.Controllers
     {
         public IActionResult Index()
         {
+            var produtos = ProdutosController.TodosOsProdutos;
+            var pedidos = PedidosController.TodosOsPedidos;
+
+            var agora = DateTime.Now;
+
+            var maisVendidos = pedidos
+                .Where(p => p.Status != "Cancelado")
+                .SelectMany(p => p.Itens)
+                .GroupBy(i => i.NomeProduto)
+                .Select(g => new ProdutoMaisVendidoViewModel
+                {
+                    Nome = g.Key,
+                    QuantidadeVendida = g.Sum(i => i.Quantidade)
+                })
+                .OrderByDescending(x => x.QuantidadeVendida)
+                .Take(4)
+                .ToList();
+
             var model = new DashboardViewModel
             {
-                TotalProdutos = 42,
-                EstoqueBaixo = 5,
-                PedidosPendentes = 3,
-                VendasMes = 2540.00m,
+                TotalProdutos = produtos.Count,
+                EstoqueBaixo = produtos.Count(p => p.Quantidade <= 5),
+                PedidosPendentes = pedidos.Count(p => p.Status == "Pendente"),
+                VendasMes = pedidos
+                    .Where(p => p.Status != "Cancelado" &&
+                                p.Data.Year == agora.Year &&
+                                p.Data.Month == agora.Month)
+                    .Sum(p => p.ValorTotal),
 
-                UltimosPedidos = PedidosController.TodosOsPedidos
+                UltimosPedidos = pedidos
                     .OrderByDescending(p => p.Data)
                     .ThenByDescending(p => p.Id)
                     .Take(3)
@@ -27,29 +49,7 @@ namespace projeto_estoque_web.Controllers
                     })
                     .ToList(),
 
-                ProdutosMaisVendidos = new List<ProdutoMaisVendidoViewModel>
-                {
-                    new ProdutoMaisVendidoViewModel
-                    {
-                        Nome = "Arroz 5kg",
-                        QuantidadeVendida = 12
-                    },
-                    new ProdutoMaisVendidoViewModel
-                    {
-                        Nome = "Feijão 1kg",
-                        QuantidadeVendida = 10
-                    },
-                    new ProdutoMaisVendidoViewModel
-                    {
-                        Nome = "Óleo de cozinha",
-                        QuantidadeVendida = 8
-                    },
-                    new ProdutoMaisVendidoViewModel
-                    {
-                        Nome = "Açúcar 1kg",
-                        QuantidadeVendida = 6
-                    }
-                }
+                ProdutosMaisVendidos = maisVendidos
             };
 
             return View(model);
