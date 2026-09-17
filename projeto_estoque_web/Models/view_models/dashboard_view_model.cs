@@ -17,6 +17,8 @@ namespace projeto_estoque_web.Models.view_models
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
         public string Status { get; set; } = string.Empty;
+        public string Cliente { get; set; } = string.Empty;
+        public int QuantidadeItens { get; set; }
     }
 
     public class ProdutoMaisVendidoViewModel

@@ -426,9 +426,15 @@ body.dark-mode td {
   color: #16804b;
 }
 
+
 /* =========================
    STATUS - TEMA ESCURO
 ========================= */
+
+.status.cancelado {
+    background: #f3f4f6;
+    color: #6b7280;
+}
 
 body.dark-mode .status.pendente {
   background: #4a3b22;
