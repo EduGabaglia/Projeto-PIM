@@ -72,37 +72,43 @@ body {
 }
 .decoracao-caixa {
     position: absolute;
-    width: 90px;
-    height: 60px;
+    width: 150px;
+    height: 100px;
     top: 60px;
     left: 60px;
-    background: #b8c9e8;
-    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(213, 224, 244, 0.5) 0%, rgba(194, 210, 238, 0.45) 100%);
+    border: 1px solid rgba(150, 170, 210, 0.25);
+    border-radius: 8px;
     z-index: 0;
     transform: rotate(-4deg);
-    box-shadow: 5px 8px 12px rgba(100, 120, 160, 0.12);
+    box-shadow:
+        0 8px 14px rgba(100, 120, 160, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 .decoracao-caixa::before {
     content: "";
     position: absolute;
-    width: 90px;
-    height: 20px;
-    top: -14px;
+    width: 100%;
+    height: 34px;
+    top: -16px;
     left: 0;
-    background: #9fb4d8;
-    border-radius: 4px 4px 2px 2px;
-    transform: skewX(-18deg);
+    background: linear-gradient(180deg, rgba(199, 215, 240, 0.55) 0%, rgba(176, 196, 228, 0.5) 100%);
+    border-radius: 8px 8px 4px 4px;
+    box-shadow:
+        inset 0 6px 8px -8px rgba(120, 140, 180, 0.4),
+        inset 0 -3px 5px -4px rgba(120, 140, 180, 0.2);
 }
 .decoracao-caixa::after {
     content: "";
     position: absolute;
-    width: 18px;
-    height: 60px;
-    top: 0;
-    right: -13px;
-    background: #8fa8d0;
-    border-radius: 0 3px 3px 0;
-    transform: skewY(-18deg);
+    width: 42px;
+    height: 9px;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(160, 180, 215, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(120, 140, 180, 0.25);
 }
 .caixa-2 {
     top: auto;
@@ -111,14 +117,6 @@ body {
     bottom: 60px;
     transform: rotate(4deg);
 }
-.decoracao-caixa span {
-    position: absolute;
-    width: 12px;
-    height: 60px;
-    left: 39px;
-    top: 0;
-    background: rgba(159, 180, 216, 0.45);
-}
 .decoracao-prancheta {
     position: absolute;
     width: 80px;
@@ -126,11 +124,11 @@ body {
     top: auto;
     left: 50px;
     bottom: 50px;
-    background-color: rgba(184, 201, 232, 0.45);
-    border: 2px solid rgba(159, 180, 216, 0.65);
+    background: linear-gradient(180deg, rgba(213, 224, 244, 0.5) 0%, rgba(194, 210, 238, 0.45) 100%);
+    border: 1px solid rgba(150, 170, 210, 0.3);
     border-radius: 6px;
     transform: rotate(-8deg);
-    box-shadow: 5px 8px 15px rgba(100, 120, 160, 0.12);
+    box-shadow: 0 8px 14px rgba(100, 120, 160, 0.12);
     box-sizing: border-box;
 }
 .prancheta-2 {
@@ -142,24 +140,28 @@ body {
     content: "";
     position: absolute;
     top: -9px;
-    left: 18px;
-    width: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
     height: 18px;
-    background-color: #9fb4d8;
-    border-radius: 5px 5px 2px 2px;
-    box-shadow: 0 2px 4px rgba(100, 120, 160, 0.15);
+    background: linear-gradient(180deg, rgba(200, 214, 238, 0.9) 0%, rgba(160, 180, 215, 0.8) 100%);
+    border: 1px solid rgba(140, 160, 200, 0.5);
+    border-radius: 6px 6px 2px 2px;
+    box-shadow: 0 1px 3px rgba(100, 120, 160, 0.25);
 }
 .decoracao-prancheta::after {
     content: "";
     position: absolute;
-    top: 30px;
-    left: 15px;
-    width: 50px;
-    height: 4px;
-    background-color: rgba(159, 180, 216, 0.5);
-    box-shadow:
-        0 12px 0 rgba(159, 180, 216, 0.5),
-        0 24px 0 rgba(159, 180, 216, 0.5);
+    top: 18px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background:
+        linear-gradient(90deg, rgba(190, 180, 220, 0.35) 0 16px, transparent 16px),
+        repeating-linear-gradient(180deg, transparent 0 15px, rgba(150, 170, 210, 0.3) 15px 17px);
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(100, 120, 160, 0.12);
 }
 .input-wrapper {
     position: relative;

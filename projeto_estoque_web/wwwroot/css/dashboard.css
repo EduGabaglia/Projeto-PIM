@@ -34,6 +34,10 @@ body.dark-mode .dashboard-header p {
   color: #9ca3af;
 }
 
+body.dark .dashboard-header h1 {
+  color: #ffffff;
+}
+
 /* =========================
    CARDS
 ========================= */
