@@ -5,294 +5,406 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>@ViewData["Title"] - Projeto Estoque</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Projeto_estoque.web.styles.css" asp-append-version="true" />
 
     @await RenderSectionAsync("Styles", required: false)
+
 </head>
 
 <body>
 
-    <script>
-        try {
-            if (localStorage.getItem("tema") === "dark") {
-                document.body.classList.add("dark");
-            }
-        }
-        catch (e) {
-            // Armazenamento indisponível (modo privado, etc.): mantém o tema padrão (claro)
-        }
-    </script>
+    @if (controllerAtual != "Login")
+    {
+        <div class="admin-layout">
 
-    <div class="admin-layout">
+            <!-- SIDEBAR -->
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
+            <aside class="sidebar" id="sidebar">
 
-            <div class="sidebar-header">
+                <header class="sidebar-header">
 
-                <div class="logo">
-                    <span class="logo-icon">📦</span>
-                    <span class="logo-text">Projeto Estoque</span>
-                </div>
+                    <div class="logo">
 
-                <button class="sidebar-close"
-                        id="sidebarClose"
-                        type="button"
-                        aria-label="Fechar menu">
-                    ×
-                </button>
+                        <span class="logo-icon">📦</span>
 
-            </div>
+                        <span class="logo-text">Projeto Estoque</span>
 
-
-            <!-- MENU -->
-            <nav class="sidebar-menu">
-
-                <span class="menu-title">MENU</span>
-
-                <a asp-controller="Dashboard"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">🏠</span>
-                    <span>Dashboard</span>
-
-                </a>
-
-                <a asp-controller="Produtos"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Produtos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">📦</span>
-                    <span>Produtos</span>
-
-                </a>
-
-                <a asp-controller="Categorias"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Categorias", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">🗂️</span>
-                    <span>Categorias</span>
-
-                </a>
-
-                <a asp-controller="Estoque"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Estoque", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">📊</span>
-                    <span>Estoque</span>
-
-                </a>
-
-                <a asp-controller="Pedidos"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Pedidos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">🛒</span>
-                    <span>Pedidos</span>
-
-                </a>
-
-                <a asp-controller="Promocoes"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Promocoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">🏷️</span>
-                    <span>Promoções</span>
-
-                </a>
-
-
-                <span class="menu-title menu-title-bottom">
-                    SISTEMA
-                </span>
-
-                <a asp-controller="Configuracoes"
-                   asp-action="Index"
-                   class="menu-item@(controllerAtual.Equals("Configuracoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
-
-                    <span class="menu-icon">⚙️</span>
-                    <span>Configurações</span>
-
-                </a>
-
-            </nav>
-
-
-            <!-- USUÁRIO -->
-            <div class="sidebar-footer">
-
-                <div class="admin-user">
-
-                    <div class="admin-avatar">
-                        A
                     </div>
 
-                    <div class="admin-info">
-                        <strong>Administrador</strong>
-                        <span>Admin</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </aside>
-
-
-        <!-- ÁREA PRINCIPAL -->
-        <div class="main-area">
-
-            <!-- TOPBAR -->
-            <header class="topbar">
-
-                <button class="menu-toggle"
-                        id="menuToggle"
-                        type="button"
-                        aria-label="Abrir menu">
-                    ☰
-                </button>
-
-                <div class="topbar-title">
-                    @ViewData["Title"]
-                </div>
-
-                <div class="topbar-actions">
-
-                    <button class="theme-toggle"
-                            id="themeToggle"
+                    <button class="sidebar-close"
+                            id="sidebarClose"
                             type="button"
-                            aria-label="Alternar tema">
-                        <span id="themeIcon">🌙</span>
+                            aria-label="Fechar menu">
+                        ×
                     </button>
 
-                    <button class="notification-button"
-                            type="button"
-                            aria-label="Notificações">
-                        🔔
-                    </button>
+                </header>
 
-                    <div class="topbar-avatar">
-                        A
+
+                <!-- MENU -->
+
+                <nav class="sidebar-menu" aria-label="Menu principal">
+
+                    <span class="menu-title">MENU</span>
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Dashboard", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">🏠</span>
+
+                        <span>Dashboard</span>
+
+                    </a>
+
+                    <a asp-controller="Produtos"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Produtos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">📦</span>
+
+                        <span>Produtos</span>
+
+                    </a>
+
+                    <a asp-controller="Categorias"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Categorias", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">🗂️</span>
+
+                        <span>Categorias</span>
+
+                    </a>
+
+                    <a asp-controller="Estoque"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Estoque", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">📊</span>
+
+                        <span>Estoque</span>
+
+                    </a>
+
+                    <a asp-controller="Pedidos"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Pedidos", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">🛒</span>
+
+                        <span>Pedidos</span>
+
+                    </a>
+
+                    <a asp-controller="Promocoes"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Promocoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">🏷️</span>
+
+                        <span>Promoções</span>
+
+                    </a>
+
+
+                    <span class="menu-title menu-title-bottom">
+                        SISTEMA
+                    </span>
+
+                    <a asp-controller="Configuracoes"
+                       asp-action="Index"
+                       class="menu-item@(controllerAtual.Equals("Configuracoes", StringComparison.OrdinalIgnoreCase) ? " active" : "")">
+
+                        <span class="menu-icon">⚙️</span>
+
+                        <span>Configurações</span>
+
+                    </a>
+
+                </nav>
+
+
+                <!-- USUÁRIO -->
+
+                <footer class="sidebar-footer">
+
+                    <div class="admin-user">
+
+                        <a asp-controller="Configuracoes"
+                           asp-action="Index"
+                           class="admin-link"
+                           title="Acessar configurações">
+                            <div class="admin-avatar">
+                                A
+                            </div>
+                        </a>
+
+                        <div class="admin-info">
+
+                            <strong>Administrador</strong>
+
+                            <span>Admin</span>
+
+                        </div>
+
                     </div>
 
-                </div>
+                </footer>
 
-            </header>
+            </aside>
 
 
-            <!-- CONTEÚDO -->
-            <main class="main-content">
-                @RenderBody()
-            </main>
+            <!-- ÁREA PRINCIPAL -->
+
+            <div class="main-area">
+
+                <!-- TOPBAR -->
+
+                <header class="topbar">
+
+                    <button class="menu-toggle"
+                            id="menuToggle"
+                            type="button"
+                            aria-label="Abrir menu">
+                        ☰
+                    </button>
+
+                    <div class="topbar-title">
+
+                        @ViewData["Title"]
+
+                    </div>
+
+                    <div class="topbar-actions">
+
+                        <!-- TEMA -->
+
+                        <button class="theme-button"
+                                id="themeToggle"
+                                type="button"
+                                aria-label="Alternar tema"
+                                title="Alternar tema">
+
+                            <span id="themeIcon">🌙</span>
+
+                        </button>
+
+
+                        <!-- NOTIFICAÇÕES -->
+
+                        <button class="notification-button"
+                                type="button"
+                                aria-label="Notificações">
+
+                            🔔
+
+                        </button>
+
+
+                        <!-- AVATAR -->
+
+                        <a asp-controller="Configuracoes"
+                           asp-action="Index"
+                           class="avatar-link"
+                           title="Acessar configurações">
+
+                            <div class="topbar-avatar">
+
+                                A
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                </header>
+
+
+                <!-- CONTEÚDO -->
+
+                <main class="main-content">
+
+                    @RenderBody()
+
+                </main>
+
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- OVERLAY MOBILE -->
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 
-    <!-- OVERLAY MOBILE -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <!-- SCRIPTS -->
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <script>
 
-    <script>
+            // =========================
+            // MENU MOBILE
+            // =========================
 
-        const menuToggle = document.getElementById("menuToggle");
-        const sidebar = document.getElementById("sidebar");
-        const sidebarClose = document.getElementById("sidebarClose");
-        const sidebarOverlay = document.getElementById("sidebarOverlay");
+            const menuToggle = document.getElementById("menuToggle");
 
+            const sidebar = document.getElementById("sidebar");
 
-        menuToggle?.addEventListener("click", function () {
+            const sidebarClose = document.getElementById("sidebarClose");
 
-            sidebar.classList.add("open");
-            sidebarOverlay.classList.add("active");
-
-        });
+            const sidebarOverlay = document.getElementById("sidebarOverlay");
 
 
-        sidebarClose?.addEventListener("click", function () {
+            menuToggle?.addEventListener("click", function () {
 
-            sidebar.classList.remove("open");
-            sidebarOverlay.classList.remove("active");
+                sidebar?.classList.add("open");
 
-        });
+                sidebarOverlay?.classList.add("active");
 
-
-        sidebarOverlay?.addEventListener("click", function () {
-
-            sidebar.classList.remove("open");
-            sidebarOverlay.classList.remove("active");
-
-        });
+            });
 
 
-        const themeToggle = document.getElementById("themeToggle");
-        const themeIcon = document.getElementById("themeIcon");
+            sidebarClose?.addEventListener("click", function () {
 
-        function lerTema() {
+                sidebar?.classList.remove("open");
 
-            try {
-                return localStorage.getItem("tema");
+                sidebarOverlay?.classList.remove("active");
+
+            });
+
+
+            sidebarOverlay?.addEventListener("click", function () {
+
+                sidebar?.classList.remove("open");
+
+                sidebarOverlay?.classList.remove("active");
+
+            });
+
+
+            // =========================
+            // TEMA
+            // =========================
+
+            const themeToggle = document.getElementById("themeToggle");
+
+            const themeIcon = document.getElementById("themeIcon");
+
+
+            function lerTema() {
+
+                try {
+
+                    return localStorage.getItem("tema");
+
+                }
+
+                catch (e) {
+
+                    return null;
+
+                }
+
             }
-            catch (e) {
-                return null;
+
+
+            function salvarTema(valor) {
+
+                try {
+
+                    localStorage.setItem("tema", valor);
+
+                }
+
+                catch (e) {
+
+                    // Sem armazenamento disponível
+
+                }
+
             }
-        }
 
-        function salvarTema(valor) {
 
-            try {
-                localStorage.setItem("tema", valor);
+            function definirTema(escuro) {
+
+                document.body.classList.toggle("dark", escuro);
+
+                if (themeIcon) {
+
+                    themeIcon.textContent = escuro ? "☀️" : "🌙";
+
+                }
+
             }
-            catch (e) {
-                // Sem armazenamento disponível: o tema vale só para a sessão atual
-            }
-        }
-
-        function definirTema(escuro) {
-
-            document.body.classList.toggle("dark", escuro);
-
-            if (themeIcon)
-                themeIcon.textContent = escuro ? "☀️" : "🌙";
-        }
-
-        themeToggle?.addEventListener("click", function () {
-
-            const escuro = !document.body.classList.contains("dark");
-
-            definirTema(escuro);
-            salvarTema(escuro ? "dark" : "light");
-        });
-
-        window.addEventListener("storage", function (evento) {
-
-            if (evento.key === "tema")
-                definirTema(evento.newValue === "dark");
-        });
-
-        definirTema(lerTema() === "dark");
-
-    </script>
 
 
+            themeToggle?.addEventListener("click", function () {
+
+                const escuro = !document.body.classList.contains("dark");
+
+                definirTema(escuro);
+
+                salvarTema(escuro ? "dark" : "light");
+
+            });
+
+
+            window.addEventListener("storage", function (evento) {
+
+                if (evento.key === "tema") {
+
+                    definirTema(evento.newValue === "dark");
+
+                }
+
+            });
+
+
+            // Aplica o tema salvo ao carregar a página
+
+            definirTema(lerTema() === "dark");
+
+        </script>
+
+
+    }
+
+    else
+    {
+        <!-- LOGIN -->
+
+        <main>
+
+            @RenderBody()
+
+        </main>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+
 </html>

@@ -2,10 +2,49 @@
     box-sizing: border-box;
 }
 
+:root {
+    --body-bg: #f5f6f8;
+    --text-color: #1f2937;
+
+    --topbar-bg: #ffffff;
+    --topbar-border: #e5e7eb;
+
+    --button-hover: #f3f4f6;
+}
+
+/* =========================
+   BASE
+========================= */
+
+html,
 body {
     margin: 0;
-    background: #f5f6f8;
-    color: #1f2937;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: var(--body-bg);
+    color: var(--text-color);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* =========================
+   TEMA ESCURO
+========================= */
+
+body.dark-mode,
+body.dark {
+    --body-bg: #111827;
+    --text-color: #f3f4f6;
+
+    --topbar-bg: #1f2937;
+    --topbar-border: #374151;
+
+    --button-hover: #374151;
 }
 
 /* =========================
@@ -127,8 +166,9 @@ body {
 
     font-size: 13px;
 
-    transition: background 0.2s ease,
-                color 0.2s ease;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .menu-item:hover {
@@ -180,6 +220,22 @@ body {
     font-weight: 600;
 }
 
+.admin-link,
+.avatar-link {
+    display: inline-flex;
+    flex-shrink: 0;
+    text-decoration: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-link:hover,
+.avatar-link:hover {
+    opacity: 0.85;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+}
+
 .admin-info strong {
     display: block;
 
@@ -211,14 +267,18 @@ body {
 .topbar {
     height: 70px;
 
-    background: #ffffff;
+    background: var(--topbar-bg);
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--topbar-border);
 
     display: flex;
     align-items: center;
 
     padding: 0 30px;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .topbar-title {
@@ -226,21 +286,50 @@ body {
     font-weight: 600;
 }
 
+/* =========================
+   AÇÕES TOPBAR
+========================= */
+
 .topbar-actions {
     margin-left: auto;
 
     display: flex;
     align-items: center;
 
-    gap: 15px;
+    gap: 12px;
 }
 
+.theme-button,
 .notification-button {
+    width: 36px;
+    height: 36px;
+
     border: none;
+    border-radius: 8px;
+
     background: transparent;
 
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.theme-button:hover,
+.notification-button:hover {
+    background: var(--button-hover);
+}
+
+.theme-button:active,
+.notification-button:active {
+    transform: scale(0.95);
 }
 
 .theme-toggle {
@@ -260,6 +349,8 @@ body {
 
     border: none;
     background: transparent;
+
+    color: var(--text-color);
 
     font-size: 22px;
 
